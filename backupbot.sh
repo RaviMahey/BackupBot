@@ -4,6 +4,9 @@
 directory=$1
 # directory= C:/Users/WELCOME/Desktop/bashtest
 echo $directory
+mkdir -p $directory/backup
+dateWithtime="$(date +%s)"
+mkdir -p $directory/backup/$dateWithtime
 for i in $directory/*;
 do
 	#this extracts file name from path
@@ -18,18 +21,26 @@ do
 	#this stores timestamp
 	timestamp="$(date +%s)"
 	
+	
+	
 	#this checks that if i is directory or  a file
-	if [  -d $i ]
+	if [ "$i" = "$directory/backup" ];
+		then
+		echo "janab ji kithe"
+		continue	
+	elif [ -d $i ];
 	then 
 		#if i is directory then backupfilename store folder name
 		backupfilename=$filename$timestamp
+
 	else
 		#if i is file the backupfilename stores file name with its extension
 		backupfilename=$filename$timestamp.$extension
 	fi
 	
 	#It makes copy of file if given directory
-	cp  -r $i $directory/$backupfilename
+	
+	cp -r $i $directory/backup/$dateWithtime/$backupfilename
 	
 	
 done
